@@ -10,14 +10,12 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.ExampleCommand;
-import frc.robot.subsystems.Cargo;
-import frc.robot.subsystems.Climber;
-import frc.robot.subsystems.ExampleSubsystem;
-import frc.robot.subsystems.Hatch;
-import frc.robot.subsystems.tank_drive;
+import frc.robot.subsystems.*;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -33,6 +31,7 @@ public class Robot extends TimedRobot {
   public static Hatch hatch;// = new Hatch();
   public static Cargo cargo;// = new Cargo();
   public static Climber climber;
+  public static Camera camera;
 
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -43,36 +42,41 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    m_oi = new OI();
-    
-    try {
-      hatch = new Hatch();
-    }
-    catch(Exception ex){
-      System.out.println("Failed Create Hatch");
-    }
+    // try {
+    //   hatch = new Hatch();
+    // }
+    // catch(Exception ex){
+    //   System.out.println("Failed Create Hatch");
+    // }
 
-    try {
-    climber = new Climber();
-    }
-    catch(Exception ex){
-      System.out.println("Failed Create Climber");
-    }
+    // try {
+    // climber = new Climber();
+    // }
+    // catch(Exception ex){
+    //   System.out.println("Failed Create Climber");
+    // }
 
-    try {
-      cargo = new Cargo();
-    }
-    catch(Exception ex){
-      System.out.println("Failed Create Cargo");
-    }
+    // try {
+    //   cargo = new Cargo();
+    // }
+    // catch(Exception ex){
+    //   System.out.println("Failed Create Cargo");
+    // }
 
     kopchassis.configDrive();
+
+    camera = new Camera();
+    
+    m_oi = new OI();
     
     m_chooser.setDefaultOption("Default Auto", new ExampleCommand());
     // chooser.addOption("My Auto", new MyAutoCommand());
     SmartDashboard.putData("Auto mode", m_chooser);
 
+    ShuffleboardTab dashboard = Shuffleboard.getTab("IronPlaid");
+    dashboard.add("Drive", kopchassis.kopdrive);//.withWidget(BuiltInWidgets.kDifferentialDrive);
 
+    SmartDashboard.putData("Drive", kopchassis.kopdrive);
   }
 
   /**

@@ -7,7 +7,6 @@
 
 package frc.robot.subsystems;
 
-
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -26,9 +25,9 @@ public class tank_drive extends Subsystem {
   WPI_TalonSRX blDrive = new WPI_TalonSRX(RobotMap.blDrive);
   WPI_TalonSRX brDrive = new WPI_TalonSRX(RobotMap.brDrive);
 
-  DifferentialDrive kopdrive = new DifferentialDrive(flDrive,frDrive);
+  public DifferentialDrive kopdrive = new DifferentialDrive(flDrive, frDrive);
 
-  public void configDrive(){
+  public void configDrive() {
 
     blDrive.follow(flDrive);
     brDrive.follow(frDrive);
@@ -38,24 +37,22 @@ public class tank_drive extends Subsystem {
     blDrive.setInverted(false);
     brDrive.setInverted(false);
     kopdrive.setDeadband(0.1);
-}
+  }
 
-public void teleopDrive(Joystick driveControl){
-  double forward = driveControl.getRawAxis(1);
-  double turn = driveControl.getRawAxis(4);
-  SmartDashboard.putNumber("fr",frDrive.getOutputCurrent());
-  SmartDashboard.putNumber("br",brDrive.getOutputCurrent());
-  SmartDashboard.putNumber("fl",flDrive.getOutputCurrent());
-  SmartDashboard.putNumber("bl",blDrive.getOutputCurrent());
-  
-  if (Math.abs(forward) < .10){
-    forward=0;
+  public void teleopDrive(Joystick driveControl) {
+    double forward = driveControl.getRawAxis(1);
+    double turn = driveControl.getRawAxis(4);
+
+    SmartDashboard.putNumber("forward", forward);
+    SmartDashboard.putNumber("turn", turn);
+
+    kopdrive.arcadeDrive(forward, turn);
   }
-  if (Math.abs(turn) < .10){
-    turn=0;
+
+  public void limelightDrive(double speed) {
+    SmartDashboard.putNumber("turn", speed);
+    kopdrive.arcadeDrive(0, speed);
   }
-kopdrive.arcadeDrive(forward, turn);
-}
 
   @Override
   public void initDefaultCommand() {
