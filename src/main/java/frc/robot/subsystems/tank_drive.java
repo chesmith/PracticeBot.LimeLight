@@ -49,9 +49,10 @@ public class tank_drive extends Subsystem {
     kopdrive.arcadeDrive(forward, turn);
   }
 
-  public void limelightDrive(double speed) {
+  public void limelightDrive(Joystick driveControl, double speed) {
     SmartDashboard.putNumber("turn", speed);
-    kopdrive.arcadeDrive(0, speed);
+    double forward = driveControl.getRawAxis(1);
+    kopdrive.arcadeDrive(forward, speed);
   }
 
   @Override

@@ -49,7 +49,7 @@ public class OI {
     leftBumper.whenPressed(new ToggleCamera());
 
     Button buttonA = new JoystickButton(command, 1);
-    buttonA.whenPressed(new LimelightFollow());
+    buttonA.whileHeld(new LimelightFollow());
   }
   //// CREATING BUTTONS
   // One type of button is a joystick button which is any button on a

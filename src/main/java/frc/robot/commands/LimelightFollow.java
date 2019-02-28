@@ -7,6 +7,8 @@
 
 package frc.robot.commands;
 
+import java.text.DecimalFormat;
+
 import edu.wpi.first.networktables.*;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -42,9 +44,19 @@ public class LimelightFollow extends Command {
     SmartDashboard.putNumber("LimelightY", y);
     SmartDashboard.putNumber("LimelightArea", area);
 
-    double kp = 0.025;
+    // NetworkTableEntry camtran = table.getEntry("camtran");
+    // double[] t = camtran.getDoubleArray(new double[6]);
+    // DecimalFormat df = new DecimalFormat("###.##");
+    // SmartDashboard.putString("LL-X", df.format(t[0]));
+    // SmartDashboard.putString("LL-Y", df.format(t[1]));
+    // SmartDashboard.putString("LL-Z", df.format(t[2]));
+    // SmartDashboard.putString("LL-Yaw", df.format(t[3]));
+    // SmartDashboard.putString("LL-Pitch", df.format(t[4]));
+    // SmartDashboard.putString("LL-Roll", df.format(t[5]));
+
+    double kp = 0.075;
     double output = kp * tx.getDouble(0);
-    Robot.kopchassis.limelightDrive(output);
+    Robot.kopchassis.limelightDrive(Robot.m_oi.returnJoystickDrive(), output);
   }
 
   // Make this return true when this Command no longer needs to run execute()
